@@ -2,6 +2,8 @@
 
 **DO NOT USE IN PRODUCTION. IT IS NOT MEANT FOR THAT.**
 
-Really, it is just dead simple.
+Really, it is dead simple. See https://uoj.ac/problem/98 for more information.
 
-It doesn't do type checking at the moment (most types are ignored), there isn't a semantic analyzer yet (it used to but I had to remove it due to source code size limit of the task) and many features are not supported (classes are not supported, and I/O stuffs are all hardcoded).
+## How to setup
+
+Run `bear -- make` to generate compile_commands.json.

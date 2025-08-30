@@ -1,17 +1,18 @@
-CXXFLAGS = -std=c++20 -Wall -Wextra -Wpedantic -ggdb3 -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wstrict-overflow=5 -Wformat=2 -Wwrite-strings -Wcast-qual -Wswitch-default -Wconversion -DLOCAL -DBOUNDCHK
+CXXFLAGS = -Iinclude -std=c++20 -Wall -Wextra -Wpedantic -ggdb3 -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wstrict-overflow=5 -Wformat=2 -Wwrite-strings -Wcast-qual -Wswitch-default -Wconversion -DLOCAL -DBOUNDCHK
 
+SRCDIR = ./src
 OUTDIR = ./output
 LOGDIR = ./log
 
-CPP = main.cpp
-OBJ = $(CPP:%.cpp=$(OUTDIR)/%.o)
+CPP = $(SRCDIR)/main.cpp
+OBJ = $(CPP:$(SRCDIR)/%.cpp=$(OUTDIR)/%.o)
 BIN = $(OBJ:%.o=%)
 DEPS = $(OBJ:%.o=%.d)
 
 ifeq ($(MODE),fast)
 CXXFLAGS += -O3 -DNDEBUG -fno-stack-protector -ffast-math -funroll-loops -ftree-vectorize
 else
-CXXFLAGS += -O0 -g -fsanitize=address,undefined
+CXXFLAGS += -O0 -g # -fsanitize=address,undefined
 endif
 
 all: $(BIN)
@@ -19,7 +20,7 @@ all: $(BIN)
 
 -include $(DEPS)
 
-$(OUTDIR)/%.o: %.cpp | $(OUTDIR) ${LOGDIR}
+$(OUTDIR)/%.o: $(SRCDIR)/%.cpp | $(OUTDIR) ${LOGDIR}
 	$(CXX) $(CXXFLAGS) -MMD -c $< -o $@
 
 $(OUTDIR)/% : $(OUTDIR)/%.o

@@ -1,3 +1,6 @@
+.cache
+.direnv
 output
 log
 source-code.cpp
+compile_commands.json
